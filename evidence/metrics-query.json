@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"factorymesh_events_total","instance":"api:8080","job":"factorymesh","result":"advanced"},"value":[1792004296.675,"5"]},{"metric":{"__name__":"factorymesh_events_total","instance":"api:8080","job":"factorymesh","result":"duplicate"},"value":[1792004296.675,"5"]}]}}

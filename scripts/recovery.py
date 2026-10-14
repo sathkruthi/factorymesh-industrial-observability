@@ -43,7 +43,7 @@ def state():
 def metrics():
     code, body = get("/metrics")
     assert code == 200
-    return {m[0]: float(m[1]) for m in re.findall(r"^(factorymesh_\w+) ([0-9.e+\-]+)$", body, re.M)}
+    return {m[0]: float(m[1]) for m in re.findall(r"^((?:factorymesh_\w+)|process_resident_memory_bytes|go_goroutines) ([0-9.e+\-]+)$", body, re.M)}
 
 
 def main():
@@ -52,7 +52,8 @@ def main():
     assert endpoint.startswith("unix://"), "Fault injection requires a local Unix-socket Docker context"
     assert get("/health/ready")[0] == 200
     start = state()["sequence"] + 1
-    before = metrics().get("factorymesh_retries_total", 0)
+    baseline = metrics()
+    before = baseline.get("factorymesh_retries_total", 0)
     try:
         compose("stop", "database")
         assert get("/health/live")[0] == 200
@@ -62,12 +63,18 @@ def main():
         assert len(fixtures) == 120
         until(lambda: metrics().get("factorymesh_retries_total", 0) > before, "database outage did not exercise retry")
         observed = []
+        rss = []
+        goroutines = []
         for _ in range(12):
             m = metrics()
             observed.append(m["factorymesh_queue_depth"])
+            rss.append(m["process_resident_memory_bytes"])
+            goroutines.append(m["go_goroutines"])
             assert 0 <= m["factorymesh_queue_depth"] <= 64, m
+            assert m["process_resident_memory_bytes"] < 200 * 1024 * 1024, m
+            assert m["go_goroutines"] <= baseline["go_goroutines"] + 64, m
             time.sleep(0.25)
-        print(json.dumps({"phase": "outage", "published": 240, "queue_max_observed": max(observed), "retry_count": metrics()["factorymesh_retries_total"], "liveness": 200, "readiness": 503}))
+        print(json.dumps({"phase": "outage", "published": 240, "queue_max_observed": max(observed), "rss_max_bytes": max(rss), "goroutines_max": max(goroutines), "retry_count": metrics()["factorymesh_retries_total"], "liveness": 200, "readiness": 503}))
         compose("start", "database")
         until(lambda: get("/health/ready")[0] == 200, "database recovery readiness failed")
         until(lambda: state()["sequence"] == start + 119, "pending events did not recover")

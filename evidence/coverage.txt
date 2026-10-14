@@ -1,0 +1,31 @@
+	github.com/sathkruthi/factorymesh-industrial-observability/cmd/factorymesh		coverage: 0.0% of statements
+	github.com/sathkruthi/factorymesh-industrial-observability/cmd/simulator		coverage: 0.0% of statements
+ok  	github.com/sathkruthi/factorymesh-industrial-observability/internal/config	0.003s	coverage: 88.6% of statements
+ok  	github.com/sathkruthi/factorymesh-industrial-observability/internal/pipeline	0.155s	coverage: 83.1% of statements
+ok  	github.com/sathkruthi/factorymesh-industrial-observability/internal/store	0.438s	coverage: 76.1% of statements
+ok  	github.com/sathkruthi/factorymesh-industrial-observability/internal/telemetry	0.003s	coverage: 86.0% of statements
+github.com/sathkruthi/factorymesh-industrial-observability/cmd/factorymesh/main.go:29:		main		0.0%
+github.com/sathkruthi/factorymesh-industrial-observability/cmd/factorymesh/main.go:36:		run		0.0%
+github.com/sathkruthi/factorymesh-industrial-observability/cmd/simulator/main.go:14:		main		0.0%
+github.com/sathkruthi/factorymesh-industrial-observability/cmd/simulator/main.go:20:		run		0.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/config/config.go:17:	Load		0.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/config/config.go:19:	Parse		91.2%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/pipeline/pipeline.go:40:	New		100.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/pipeline/pipeline.go:55:	Handle		0.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/pipeline/pipeline.go:56:	Submit		70.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/pipeline/pipeline.go:75:	Wait		100.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/pipeline/pipeline.go:77:	worker		100.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/pipeline/pipeline.go:89:	process		82.9%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/store/store.go:51:		Open		0.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/store/store.go:64:		Migrate		100.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/store/store.go:65:		Provision	75.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/store/store.go:73:		Ingest		100.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/store/store.go:77:		ingest		85.4%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/store/store.go:144:		Devices		87.5%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/store/store.go:167:		Alerts		81.8%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/store/store.go:183:		String		0.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/telemetry/event.go:27:	Decode		94.1%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/telemetry/event.go:53:	Validate	54.5%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/telemetry/event.go:73:	Fingerprint	100.0%
+github.com/sathkruthi/factorymesh-industrial-observability/internal/telemetry/event.go:94:	Evaluate	100.0%
+total:												(statements)	51.3%

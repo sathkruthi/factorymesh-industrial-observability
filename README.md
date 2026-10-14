@@ -97,3 +97,7 @@ Read the [design](docs/design.md), [contracts](docs/contracts.md), [operations](
 | [003](incidents/003/problem.md) | Threshold noise floods alert notifications | Same fixture produces 5 unsafe notifications versus 2 eligible corrected notifications |
 
 These are explicitly synthetic engineering exercises, not claims about historical customer incidents or professional employment.
+
+## Ownership and licensing
+
+Original project code is unlicensed at the owner’s request. Third-party compiled dependency license texts are preserved in [third-party notices](docs/third-party-notices.md).

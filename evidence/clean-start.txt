@@ -1,0 +1,122 @@
+ Container factorymesh-traces-1 Stopping 
+ Container factorymesh-prometheus-1 Stopping 
+ Container factorymesh-api-1 Stopping 
+ Container factorymesh-grafana-1 Stopping 
+ Container factorymesh-api-1 Stopped 
+ Container factorymesh-api-1 Removing 
+ Container factorymesh-prometheus-1 Stopped 
+ Container factorymesh-prometheus-1 Removing 
+ Container factorymesh-prometheus-1 Removed 
+ Container factorymesh-api-1 Removed 
+ Container factorymesh-database-1 Stopping 
+ Container factorymesh-broker-1 Stopping 
+ Container factorymesh-grafana-1 Stopped 
+ Container factorymesh-grafana-1 Removing 
+ Container factorymesh-grafana-1 Removed 
+ Container factorymesh-broker-1 Stopped 
+ Container factorymesh-broker-1 Removing 
+ Container factorymesh-database-1 Stopped 
+ Container factorymesh-database-1 Removing 
+ Container factorymesh-database-1 Removed 
+ Container factorymesh-broker-1 Removed 
+ Container factorymesh-traces-1 Stopped 
+ Container factorymesh-traces-1 Removing 
+ Container factorymesh-traces-1 Removed 
+ Network factorymesh_default Removing 
+ Network factorymesh_default Removed 
+time="2026-10-15T00:28:29+05:30" level=warning msg="buildx Docker CLI plugin not found: falling back to the classic builder. BuildKit-only build features (multi-arch, secrets, ssh, additional contexts, ...) will not be available"
+ Image factorymesh-review-api Building 
+ Image factorymesh-review-api Building 
+Sending build context to Docker daemon   56.6kB
+Step 1/12 : FROM golang:1.27.2-alpine AS build
+ ---> f92b6ef800e4
+Step 2/12 : WORKDIR /src
+ ---> Using cache
+ ---> 4e5730a1f7bf
+Step 3/12 : COPY go.mod go.sum ./
+ ---> 077bef982883
+Step 4/12 : RUN go mod download
+ ---> Running in b7e4eeae3432
+ ---> Removed intermediate container b7e4eeae3432
+ ---> f7ada1e45996
+Step 5/12 : COPY . .
+ ---> 8d16898b1af9
+Step 6/12 : RUN CGO_ENABLED=0 go build -trimpath -o /out/factorymesh ./cmd/factorymesh && CGO_ENABLED=0 go build -trimpath -o /out/simulator ./cmd/simulator
+ ---> Running in be9c0cfe7a91
+ ---> Removed intermediate container be9c0cfe7a91
+ ---> b637db99ee50
+Step 7/12 : FROM alpine:3.23
+ ---> 85fe1e81d675
+Step 8/12 : RUN apk add --no-cache ca-certificates && adduser -D -u 10001 app
+ ---> Using cache
+ ---> 40c5bb9693c1
+Step 9/12 : COPY --from=build /out/* /usr/local/bin/
+ ---> 850aeb766c54
+Step 10/12 : USER app
+ ---> Running in 4818338162f5
+ ---> Removed intermediate container 4818338162f5
+ ---> ffc62cf2fcc3
+Step 11/12 : ENTRYPOINT ["factorymesh"]
+ ---> Running in a0769cb0a0bb
+ ---> Removed intermediate container a0769cb0a0bb
+ ---> 201258a2e777
+Step 12/12 : LABEL com.docker.compose.image.builder=classic
+ ---> Running in e208ee993ac9
+ ---> Removed intermediate container e208ee993ac9
+ ---> c58437323dc8
+Successfully built c58437323dc8
+Successfully tagged factorymesh-review-api:latest
+ Image factorymesh-review-api Built 
+ Image factorymesh-review-api Built 
+ Volume factorymesh-review_broker Creating 
+ Volume factorymesh-review_broker Creating 
+ Network factorymesh-review_default Creating 
+ Volume factorymesh-review_database Creating 
+ Volume factorymesh-review_database Creating 
+ Network factorymesh-review_default Creating 
+ Volume factorymesh-review_broker Created 
+ Volume factorymesh-review_broker Created 
+ Volume factorymesh-review_database Created 
+ Volume factorymesh-review_database Created 
+ Network factorymesh-review_default Created 
+ Network factorymesh-review_default Created 
+ Container factorymesh-review-traces-1 Creating 
+ Container factorymesh-review-grafana-1 Creating 
+ Container factorymesh-review-prometheus-1 Creating 
+ Container factorymesh-review-database-1 Creating 
+ Container factorymesh-review-broker-1 Creating 
+ Container factorymesh-review-grafana-1 Created 
+ Container factorymesh-review-prometheus-1 Created 
+ Container factorymesh-review-broker-1 Created 
+ Container factorymesh-review-traces-1 Created 
+ Container factorymesh-review-database-1 Created 
+ Container factorymesh-review-api-1 Creating 
+ Container factorymesh-review-api-1 Created 
+ Container factorymesh-review-traces-1 Starting 
+ Container factorymesh-review-broker-1 Starting 
+ Container factorymesh-review-prometheus-1 Starting 
+ Container factorymesh-review-grafana-1 Starting 
+ Container factorymesh-review-database-1 Starting 
+ Container factorymesh-review-traces-1 Started 
+ Container factorymesh-review-broker-1 Started 
+ Container factorymesh-review-prometheus-1 Started 
+ Container factorymesh-review-grafana-1 Started 
+ Container factorymesh-review-database-1 Started 
+ Container factorymesh-review-broker-1 Waiting 
+ Container factorymesh-review-database-1 Waiting 
+ Container factorymesh-review-broker-1 Healthy 
+ Container factorymesh-review-database-1 Healthy 
+ Container factorymesh-review-api-1 Starting 
+ Container factorymesh-review-api-1 Started 
+ Container factorymesh-review-traces-1 Waiting 
+ Container factorymesh-review-database-1 Waiting 
+ Container factorymesh-review-broker-1 Waiting 
+ Container factorymesh-review-api-1 Waiting 
+ Container factorymesh-review-prometheus-1 Waiting 
+ Container factorymesh-review-grafana-1 Waiting 
+ Container factorymesh-review-prometheus-1 Healthy 
+ Container factorymesh-review-traces-1 Healthy 
+ Container factorymesh-review-grafana-1 Healthy 
+ Container factorymesh-review-database-1 Healthy 
+ Container factorymesh-review-broker-1 Healthy 
+ Container factorymesh-review-api-1 Healthy 

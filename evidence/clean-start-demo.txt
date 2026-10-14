@@ -1,0 +1,83 @@
+ Container factorymesh-review-database-1 Running 
+ Container factorymesh-review-broker-1 Running 
+ Container factorymesh-review-api-1 Running 
+ Container factorymesh-review-broker-1 Waiting 
+ Container factorymesh-review-database-1 Waiting 
+ Container factorymesh-review-broker-1 Healthy 
+ Container factorymesh-review-database-1 Healthy 
+time="2026-10-15T00:29:57+05:30" level=warning msg="buildx Docker CLI plugin not found: falling back to the classic builder. BuildKit-only build features (multi-arch, secrets, ssh, additional contexts, ...) will not be available"
+ Image factorymesh-review-simulator Building 
+ Image factorymesh-review-simulator Building 
+Sending build context to Docker daemon  59.63kB
+Step 1/12 : FROM golang:1.27.2-alpine AS build
+ ---> f92b6ef800e4
+Step 2/12 : WORKDIR /src
+ ---> Using cache
+ ---> 4e5730a1f7bf
+Step 3/12 : COPY go.mod go.sum ./
+ ---> Using cache
+ ---> 077bef982883
+Step 4/12 : RUN go mod download
+ ---> Using cache
+ ---> f7ada1e45996
+Step 5/12 : COPY . .
+ ---> eaf60b3144b2
+Step 6/12 : RUN CGO_ENABLED=0 go build -trimpath -o /out/factorymesh ./cmd/factorymesh && CGO_ENABLED=0 go build -trimpath -o /out/simulator ./cmd/simulator
+ ---> Running in 550f421db76f
+ ---> Removed intermediate container 550f421db76f
+ ---> 0cff85e53c89
+Step 7/12 : FROM alpine:3.23
+ ---> 85fe1e81d675
+Step 8/12 : RUN apk add --no-cache ca-certificates && adduser -D -u 10001 app
+ ---> Using cache
+ ---> 40c5bb9693c1
+Step 9/12 : COPY --from=build /out/* /usr/local/bin/
+ ---> Using cache
+ ---> 850aeb766c54
+Step 10/12 : USER app
+ ---> Using cache
+ ---> ffc62cf2fcc3
+Step 11/12 : ENTRYPOINT ["factorymesh"]
+ ---> Using cache
+ ---> 201258a2e777
+Step 12/12 : LABEL com.docker.compose.image.builder=classic
+ ---> Using cache
+ ---> c58437323dc8
+Successfully built c58437323dc8
+Successfully tagged factorymesh-review-simulator:latest
+ Image factorymesh-review-simulator Built 
+ Image factorymesh-review-simulator Built 
+ Container factorymesh-review-api-1 Waiting 
+ Container factorymesh-review-api-1 Healthy 
+ Container factorymesh-review-simulator-run-eec154d5f9a8 Creating 
+ Container factorymesh-review-simulator-run-eec154d5f9a8 Created 
+{"schema":1,"device":"press-001","generation":1,"sequence":1,"observed_at":"2026-10-14T19:00:11.913545835Z","temperature_mc":84391,"correlation_id":"sim-1-0"}
+{"schema":1,"device":"press-001","generation":1,"sequence":2,"observed_at":"2026-10-14T19:00:12.014001406Z","temperature_mc":80090,"correlation_id":"sim-1-1"}
+{"schema":1,"device":"press-001","generation":1,"sequence":3,"observed_at":"2026-10-14T19:00:12.114457718Z","temperature_mc":74437,"correlation_id":"sim-1-2"}
+{"schema":1,"device":"press-001","generation":1,"sequence":4,"observed_at":"2026-10-14T19:00:12.214931943Z","temperature_mc":81838,"correlation_id":"sim-1-3"}
+{"schema":1,"device":"press-001","generation":1,"sequence":5,"observed_at":"2026-10-14T19:00:12.315404456Z","temperature_mc":75816,"correlation_id":"sim-1-4"}
+{"schema":1,"device":"press-001","generation":1,"sequence":6,"observed_at":"2026-10-14T19:00:12.415759358Z","temperature_mc":77081,"correlation_id":"sim-1-5"}
+{"schema":1,"device":"press-001","generation":1,"sequence":7,"observed_at":"2026-10-14T19:00:12.516257528Z","temperature_mc":79132,"correlation_id":"sim-1-6"}
+{"schema":1,"device":"press-001","generation":1,"sequence":8,"observed_at":"2026-10-14T19:00:12.616673666Z","temperature_mc":78160,"correlation_id":"sim-1-7"}
+{"schema":1,"device":"press-001","generation":1,"sequence":9,"observed_at":"2026-10-14T19:00:12.717124738Z","temperature_mc":81612,"correlation_id":"sim-1-8"}
+{"schema":1,"device":"press-001","generation":1,"sequence":10,"observed_at":"2026-10-14T19:00:12.817569529Z","temperature_mc":74986,"correlation_id":"sim-1-9"}
+{"schema":1,"device":"press-001","generation":1,"sequence":11,"observed_at":"2026-10-14T19:00:12.917971129Z","temperature_mc":78991,"correlation_id":"sim-1-10"}
+{"schema":1,"device":"press-001","generation":1,"sequence":12,"observed_at":"2026-10-14T19:00:13.018427901Z","temperature_mc":81264,"correlation_id":"sim-1-11"}
+{"schema":1,"device":"press-001","generation":1,"sequence":13,"observed_at":"2026-10-14T19:00:13.118790007Z","temperature_mc":78387,"correlation_id":"sim-1-12"}
+{"schema":1,"device":"press-001","generation":1,"sequence":14,"observed_at":"2026-10-14T19:00:13.219235058Z","temperature_mc":79720,"correlation_id":"sim-1-13"}
+{"schema":1,"device":"press-001","generation":1,"sequence":15,"observed_at":"2026-10-14T19:00:13.319636207Z","temperature_mc":80498,"correlation_id":"sim-1-14"}
+{"schema":1,"device":"press-001","generation":1,"sequence":16,"observed_at":"2026-10-14T19:00:13.420061781Z","temperature_mc":81246,"correlation_id":"sim-1-15"}
+{"schema":1,"device":"press-001","generation":1,"sequence":17,"observed_at":"2026-10-14T19:00:13.520460405Z","temperature_mc":85308,"correlation_id":"sim-1-16"}
+{"schema":1,"device":"press-001","generation":1,"sequence":18,"observed_at":"2026-10-14T19:00:13.620884598Z","temperature_mc":81743,"correlation_id":"sim-1-17"}
+{"schema":1,"device":"press-001","generation":1,"sequence":19,"observed_at":"2026-10-14T19:00:13.721220264Z","temperature_mc":74312,"correlation_id":"sim-1-18"}
+{"schema":1,"device":"press-001","generation":1,"sequence":20,"observed_at":"2026-10-14T19:00:13.821688618Z","temperature_mc":80785,"correlation_id":"sim-1-19"}
+{"schema":1,"device":"press-001","generation":1,"sequence":21,"observed_at":"2026-10-14T19:00:13.922158877Z","temperature_mc":84416,"correlation_id":"sim-1-20"}
+{"schema":1,"device":"press-001","generation":1,"sequence":22,"observed_at":"2026-10-14T19:00:14.022614146Z","temperature_mc":75780,"correlation_id":"sim-1-21"}
+{"schema":1,"device":"press-001","generation":1,"sequence":23,"observed_at":"2026-10-14T19:00:14.123115282Z","temperature_mc":73674,"correlation_id":"sim-1-22"}
+{"schema":1,"device":"press-001","generation":1,"sequence":24,"observed_at":"2026-10-14T19:00:14.223504689Z","temperature_mc":70890,"correlation_id":"sim-1-23"}
+{"schema":1,"device":"press-001","generation":1,"sequence":25,"observed_at":"2026-10-14T19:00:14.323935894Z","temperature_mc":81474,"correlation_id":"sim-1-24"}
+{"schema":1,"device":"press-001","generation":1,"sequence":26,"observed_at":"2026-10-14T19:00:14.424340999Z","temperature_mc":79542,"correlation_id":"sim-1-25"}
+{"schema":1,"device":"press-001","generation":1,"sequence":27,"observed_at":"2026-10-14T19:00:14.52470529Z","temperature_mc":77273,"correlation_id":"sim-1-26"}
+{"schema":1,"device":"press-001","generation":1,"sequence":28,"observed_at":"2026-10-14T19:00:14.625126586Z","temperature_mc":84947,"correlation_id":"sim-1-27"}
+{"schema":1,"device":"press-001","generation":1,"sequence":29,"observed_at":"2026-10-14T19:00:14.725517776Z","temperature_mc":71888,"correlation_id":"sim-1-28"}
+{"schema":1,"device":"press-001","generation":1,"sequence":30,"observed_at":"2026-10-14T19:00:14.825981993Z","temperature_mc":71695,"correlation_id":"sim-1-29"}

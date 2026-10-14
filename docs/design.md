@@ -1,6 +1,6 @@
 # FactoryMesh — implementation design
 
-Status: proposed design; no implementation or validation claimed.
+Status: initial pre-implementation proposal preserved for traceability. The implementation contracts and measured results are documented in contracts.md and verification.md. The review records scope adjustments.
 
 ## Problem and scope
 

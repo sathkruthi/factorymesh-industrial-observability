@@ -1,0 +1,2 @@
+{"phase": "outage", "published": 240, "queue_max_observed": 14.0, "rss_max_bytes": 29175808.0, "goroutines_max": 43.0, "retry_count": 2.0, "liveness": 200, "readiness": 503}
+{"phase": "recovered", "stored_unique": 120, "last_sequence": 120, "broker_reconnected": true}
