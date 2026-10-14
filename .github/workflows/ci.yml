@@ -1,0 +1,20 @@
+name: verification
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: make test check build
+      - run: docker compose up --build -d --wait
+      - run: make integration
+      - if: always()
+        run: docker compose logs --no-color
+      - if: always()
+        run: docker compose down -v
