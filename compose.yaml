@@ -1,0 +1,72 @@
+name: factorymesh
+services:
+  database:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: factorymesh
+      POSTGRES_USER: factorymesh
+      POSTGRES_PASSWORD: local_demo_only
+    ports: ["127.0.0.1:55432:5432"]
+    volumes: ["database:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U factorymesh -d factorymesh"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+    mem_limit: 512m
+  broker:
+    image: eclipse-mosquitto:2
+    ports: ["127.0.0.1:1883:1883"]
+    volumes:
+      - ./deploy/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - broker:/mosquitto/data
+    healthcheck:
+      test: ["CMD", "mosquitto_pub", "-h", "localhost", "-t", "health", "-m", "ok"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+    mem_limit: 128m
+  api:
+    build: .
+    environment:
+      DATABASE_URL: postgres://factorymesh:local_demo_only@database:5432/factorymesh?sslmode=disable
+      BROKER_URL: tcp://broker:1883
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://traces:4318
+    ports: ["127.0.0.1:8080:8080"]
+    depends_on:
+      database: {condition: service_healthy}
+      broker: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:8080/health/ready"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    mem_limit: 256m
+  simulator:
+    build: .
+    entrypoint: ["simulator"]
+    profiles: ["demo"]
+    depends_on:
+      api: {condition: service_healthy}
+    mem_limit: 64m
+  prometheus:
+    image: prom/prometheus:v3.2.1
+    volumes: ["./deploy/prometheus.yml:/etc/prometheus/prometheus.yml:ro"]
+    ports: ["127.0.0.1:9090:9090"]
+    mem_limit: 256m
+  grafana:
+    image: grafana/grafana:11.6.0
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+    volumes: ["./deploy/grafana:/etc/grafana/provisioning:ro"]
+    ports: ["127.0.0.1:3000:3000"]
+    mem_limit: 256m
+  traces:
+    image: jaegertracing/jaeger:2.4.0
+    ports: ["127.0.0.1:16686:16686"]
+    mem_limit: 256m
+volumes:
+  database:
+  broker:
