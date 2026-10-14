@@ -1,0 +1,7 @@
+fuzz: elapsed: 0s, gathering baseline coverage: 0/2 completed
+fuzz: elapsed: 0s, gathering baseline coverage: 2/2 completed, now fuzzing with 16 workers
+fuzz: elapsed: 3s, execs: 393800 (131229/sec), new interesting: 176 (total: 178)
+fuzz: elapsed: 6s, execs: 393800 (0/sec), new interesting: 176 (total: 178)
+fuzz: elapsed: 6s, execs: 393800 (0/sec), new interesting: 176 (total: 178)
+PASS
+ok  	github.com/sathkruthi/factorymesh-industrial-observability/internal/telemetry	6.045s

@@ -1,0 +1,149 @@
+go: downloading golang.org/x/vuln v1.9.0
+go: downloading golang.org/x/telemetry v0.0.0-20261010193011-f71dc92da45e
+go: downloading golang.org/x/tools v0.52.0
+go: downloading golang.org/x/mod v0.42.0
+go: downloading golang.org/x/sync v0.24.0
+=== Symbol Results ===
+
+Vulnerability #1: GO-2026-6617
+    HTTP/2 server crash due to HPACK encoder race in net/http
+  More info: https://pkg.go.dev/vuln/GO-2026-6617
+  Module: golang.org/x/net
+    Found in: golang.org/x/net@v0.59.0
+    Fixed in: golang.org/x/net@v0.60.0
+    Example traces found:
+      #1: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.ConnectionError.Error
+      #2: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.ErrCode.String
+      #3: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.FrameHeader.String
+      #4: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.FrameType.String
+      #5: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.ReadFrame
+      #6: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.ReadFrameForHeader
+      #7: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.ReadFrameHeader
+      #8: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteContinuation
+      #9: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteGoAway
+      #10: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteHeaders
+      #11: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WritePing
+      #12: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteRSTStream
+      #13: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteSettings
+      #14: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteSettingsAck
+      #15: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteWindowUpdate
+      #16: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.SettingID.String
+      #17: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.SettingsFrame.ForeachSetting
+      #18: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.StreamError.Error
+      #19: cmd/factorymesh/main.go:48:50: factorymesh.run calls trace.WithBatcher, which eventually calls http2.Transport.RoundTrip
+      #20: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.connError.Error
+      #21: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.duplicatePseudoHeaderError.Error
+      #22: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.headerFieldNameError.Error
+      #23: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.headerFieldValueError.Error
+      #24: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.pseudoHeaderError.Error
+
+Vulnerability #2: GO-2026-6612
+    Double flow control refund on HTTP/2 server streams in net/http
+  More info: https://pkg.go.dev/vuln/GO-2026-6612
+  Module: golang.org/x/net
+    Found in: golang.org/x/net@v0.59.0
+    Fixed in: golang.org/x/net@v0.60.0
+    Example traces found:
+      #1: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.ConnectionError.Error
+      #2: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.ErrCode.String
+      #3: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.FrameHeader.String
+      #4: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.FrameType.String
+      #5: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.ReadFrame
+      #6: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.ReadFrameForHeader
+      #7: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.ReadFrameHeader
+      #8: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteContinuation
+      #9: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteGoAway
+      #10: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteHeaders
+      #11: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WritePing
+      #12: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteRSTStream
+      #13: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteSettings
+      #14: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteSettingsAck
+      #15: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteWindowUpdate
+      #16: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.SettingID.String
+      #17: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.SettingsFrame.ForeachSetting
+      #18: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.StreamError.Error
+      #19: cmd/factorymesh/main.go:48:50: factorymesh.run calls trace.WithBatcher, which eventually calls http2.Transport.RoundTrip
+      #20: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.connError.Error
+      #21: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.duplicatePseudoHeaderError.Error
+      #22: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.headerFieldNameError.Error
+      #23: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.headerFieldValueError.Error
+      #24: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.pseudoHeaderError.Error
+
+Vulnerability #3: GO-2026-6611
+    Excessive CPU consumption from repeated initial window changes in net/http
+  More info: https://pkg.go.dev/vuln/GO-2026-6611
+  Module: golang.org/x/net
+    Found in: golang.org/x/net@v0.59.0
+    Fixed in: golang.org/x/net@v0.60.0
+    Example traces found:
+      #1: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.ConnectionError.Error
+      #2: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.ErrCode.String
+      #3: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.FrameHeader.String
+      #4: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.FrameType.String
+      #5: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.ReadFrame
+      #6: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.ReadFrameForHeader
+      #7: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.ReadFrameHeader
+      #8: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteContinuation
+      #9: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteGoAway
+      #10: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteHeaders
+      #11: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WritePing
+      #12: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteRSTStream
+      #13: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteSettings
+      #14: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteSettingsAck
+      #15: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteWindowUpdate
+      #16: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.SettingID.String
+      #17: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.SettingsFrame.ForeachSetting
+      #18: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.StreamError.Error
+      #19: cmd/factorymesh/main.go:48:50: factorymesh.run calls trace.WithBatcher, which eventually calls http2.Transport.RoundTrip
+      #20: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.connError.Error
+      #21: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.duplicatePseudoHeaderError.Error
+      #22: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.headerFieldNameError.Error
+      #23: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.headerFieldValueError.Error
+      #24: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.pseudoHeaderError.Error
+
+Vulnerability #4: GO-2026-6610
+    HTTP/2 transport accepts malformed framing-related headers in net/http
+  More info: https://pkg.go.dev/vuln/GO-2026-6610
+  Module: golang.org/x/net
+    Found in: golang.org/x/net@v0.59.0
+    Fixed in: golang.org/x/net@v0.60.0
+    Example traces found:
+      #1: cmd/factorymesh/main.go:48:50: factorymesh.run calls trace.WithBatcher, which eventually calls http2.Transport.RoundTrip
+
+Vulnerability #5: GO-2026-6603
+    HTTP/2 server memory exhaustion due to Trailer headers in net/http
+  More info: https://pkg.go.dev/vuln/GO-2026-6603
+  Module: golang.org/x/net
+    Found in: golang.org/x/net@v0.59.0
+    Fixed in: golang.org/x/net@v0.60.0
+    Example traces found:
+      #1: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.ConnectionError.Error
+      #2: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.ErrCode.String
+      #3: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.FrameHeader.String
+      #4: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.FrameType.String
+      #5: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.ReadFrame
+      #6: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.ReadFrameForHeader
+      #7: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.ReadFrameHeader
+      #8: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteContinuation
+      #9: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteGoAway
+      #10: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteHeaders
+      #11: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WritePing
+      #12: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteRSTStream
+      #13: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteSettings
+      #14: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteSettingsAck
+      #15: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.Framer.WriteWindowUpdate
+      #16: cmd/simulator/main.go:16:15: simulator.main calls fmt.Fprintln, which eventually calls http2.SettingID.String
+      #17: cmd/factorymesh/main.go:60:2: factorymesh.run calls pgxpool.Pool.Close, which eventually calls http2.SettingsFrame.ForeachSetting
+      #18: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.StreamError.Error
+      #19: cmd/factorymesh/main.go:48:50: factorymesh.run calls trace.WithBatcher, which eventually calls http2.Transport.RoundTrip
+      #20: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.connError.Error
+      #21: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.duplicatePseudoHeaderError.Error
+      #22: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.headerFieldNameError.Error
+      #23: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.headerFieldValueError.Error
+      #24: internal/telemetry/event.go:34:20: telemetry.Decode calls json.Decoder.Decode, which calls http2.pseudoHeaderError.Error
+
+Your code is affected by 5 vulnerabilities from 1 module.
+This scan found no other vulnerabilities in packages you import or modules you
+require.
+Use '-show verbose' for more details.
+exit status 3

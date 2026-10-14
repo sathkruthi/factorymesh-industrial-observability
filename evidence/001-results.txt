@@ -1,0 +1,12 @@
+DATABASE_URL=postgres://factorymesh:local_demo_only@localhost:55432/factorymesh?sslmode=disable python3 scripts/incident.py 001
+INCIDENT-001: unsafe policy failed for expected reason; corrected policy passed.
+=== RUN   TestIncident001Ordering
+    store_integration_test.go:83: late telemetry corrupted current state: sequence=2 temperature=70002; expected 3 / 70003
+--- FAIL: TestIncident001Ordering (0.05s)
+FAIL
+FAIL	github.com/sathkruthi/factorymesh-industrial-observability/internal/store	0.062s
+FAIL
+=== RUN   TestIncident001Ordering
+--- PASS: TestIncident001Ordering (0.06s)
+PASS
+ok  	github.com/sathkruthi/factorymesh-industrial-observability/internal/store	1.062s

@@ -1,0 +1,9 @@
+goos: linux
+goarch: amd64
+pkg: github.com/sathkruthi/factorymesh-industrial-observability/internal/store
+cpu: AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     
+BenchmarkIngest-16    	    3753	   1127582 ns/op	    2256 B/op	      51 allocs/op
+BenchmarkIngest-16    	    3976	   1448577 ns/op	    2255 B/op	      51 allocs/op
+BenchmarkIngest-16    	    3584	   1104497 ns/op	    2256 B/op	      51 allocs/op
+PASS
+ok  	github.com/sathkruthi/factorymesh-industrial-observability/internal/store	14.307s

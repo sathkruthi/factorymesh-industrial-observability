@@ -1,6 +1,7 @@
 package telemetry
 
 import (
+	"bytes"
 	"encoding/json"
 	"testing"
 	"time"
@@ -59,9 +60,34 @@ func FuzzDecode(f *testing.F) {
 	f.Fuzz(func(t *testing.T, b []byte) {
 		e, err := Decode(b)
 		if err == nil {
-			if err = e.Validate(); err != nil {
+			canonical, err := json.Marshal(e)
+			if err != nil {
 				t.Fatal(err)
+			}
+			replayed, err := Decode(canonical)
+			if err != nil || !bytes.Equal(e.Fingerprint(), replayed.Fingerprint()) {
+				t.Fatalf("accepted event did not preserve replay identity: %v", err)
 			}
 		}
 	})
+}
+
+func TestRequiredFields(t *testing.T) {
+	b, _ := json.Marshal(Sample(1, 0))
+	var fields map[string]json.RawMessage
+	json.Unmarshal(b, &fields)
+	for key := range fields {
+		original := fields[key]
+		delete(fields, key)
+		payload, _ := json.Marshal(fields)
+		if _, err := Decode(payload); err == nil {
+			t.Fatalf("missing %s accepted", key)
+		}
+		fields[key] = json.RawMessage("null")
+		payload, _ = json.Marshal(fields)
+		if _, err := Decode(payload); err == nil {
+			t.Fatalf("null %s accepted", key)
+		}
+		fields[key] = original
+	}
 }

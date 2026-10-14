@@ -1,0 +1,10 @@
+go test -race ./...
+?   	github.com/sathkruthi/factorymesh-industrial-observability/cmd/factorymesh	[no test files]
+?   	github.com/sathkruthi/factorymesh-industrial-observability/cmd/simulator	[no test files]
+ok  	github.com/sathkruthi/factorymesh-industrial-observability/internal/config	1.006s
+ok  	github.com/sathkruthi/factorymesh-industrial-observability/internal/pipeline	1.160s
+?   	github.com/sathkruthi/factorymesh-industrial-observability/internal/store	[no test files]
+ok  	github.com/sathkruthi/factorymesh-industrial-observability/internal/telemetry	1.009s
+go vet ./...
+test -z "$(gofmt -l $(find . -name '*.go'))"
+go build ./...

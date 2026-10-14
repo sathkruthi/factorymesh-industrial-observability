@@ -1,4 +1,4 @@
-.PHONY: test check build integration up down demo
+.PHONY: test check build integration up down demo setup incident recovery
 test:
 	go test -race ./...
 check:
@@ -13,4 +13,10 @@ up:
 down:
 	docker compose down
 demo:
-	docker compose run --rm simulator
+	python3 scripts/demo.py
+setup:
+	go mod download
+incident:
+	DATABASE_URL=postgres://factorymesh:local_demo_only@localhost:55432/factorymesh?sslmode=disable python3 scripts/incident.py $(ID)
+recovery:
+	python3 scripts/recovery.py

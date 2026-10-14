@@ -1,0 +1,2 @@
+api-1  | {"time":"2026-10-14T18:53:30.153503144Z","level":"INFO","msg":"service started","queue_capacity":64,"workers":2}
+api-1  | {"time":"2026-10-14T18:53:30.153999603Z","level":"INFO","msg":"broker subscription ready"}

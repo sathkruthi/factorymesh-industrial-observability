@@ -150,6 +150,10 @@ func TestRollbackOnAlertPersistenceFailure(t *testing.T) {
 
 func TestIncident003AlertNoise(t *testing.T) {
 	s := testStore(t)
+	if os.Getenv("FM_UNSAFE_ALERT") == "1" {
+		s.Rule.Clear = s.Rule.High
+		s.Rule.Cooldown = 0
+	}
 	ctx := context.Background()
 	now := time.Unix(100, 0)
 	temps := []int64{80001, 79999, 80001, 79999, 80001, 74000, 81000, 74000, 85000}

@@ -9,6 +9,7 @@ import (
 	"github.com/sathkruthi/factorymesh-industrial-observability/internal/telemetry"
 	"io"
 	"log/slog"
+	"os"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -23,10 +24,11 @@ func (m *fakeMessage) Payload() []byte { return m.b }
 func (m *fakeMessage) Ack()            { m.ack.Add(1) }
 
 type fakeSink struct {
-	calls   atomic.Int32
-	fail    atomic.Bool
-	entered chan struct{}
-	gate    chan struct{}
+	calls    atomic.Int32
+	failures atomic.Int32
+	fail     atomic.Bool
+	entered  chan struct{}
+	gate     chan struct{}
 }
 
 func (s *fakeSink) Ingest(ctx context.Context, e telemetry.Event, now time.Time) (store.Result, error) {
@@ -45,6 +47,7 @@ func (s *fakeSink) Ingest(ctx context.Context, e telemetry.Event, now time.Time)
 		}
 	}
 	if s.fail.Load() {
+		s.failures.Add(1)
 		return store.Result{}, errors.New("outage")
 	}
 	return store.Result{Kind: "advanced"}, nil
@@ -72,8 +75,11 @@ func TestAckOnlyAfterCommitAndRecovery(t *testing.T) {
 	s.fail.Store(true)
 	p := New(ctx, s, 2, 1, prometheus.NewRegistry(), slog.New(slog.NewTextHandler(io.Discard, nil)))
 	m := message(1)
+	if os.Getenv("FM_UNSAFE_ACK") == "1" {
+		m.Ack()
+	}
 	p.Submit(m)
-	await(t, func() bool { return s.calls.Load() > 0 })
+	await(t, func() bool { return s.failures.Load() > 0 })
 	if m.ack.Load() != 0 {
 		t.Fatal("acknowledged before durable commit")
 	}

@@ -1,0 +1,12 @@
+DATABASE_URL=postgres://factorymesh:local_demo_only@localhost:55432/factorymesh?sslmode=disable python3 scripts/incident.py 002
+INCIDENT-002: unsafe policy failed for expected reason; corrected policy passed.
+=== RUN   TestAckOnlyAfterCommitAndRecovery
+    pipeline_test.go:82: acknowledged before durable commit
+--- FAIL: TestAckOnlyAfterCommitAndRecovery (0.01s)
+FAIL
+FAIL	github.com/sathkruthi/factorymesh-industrial-observability/internal/pipeline	0.013s
+FAIL
+=== RUN   TestAckOnlyAfterCommitAndRecovery
+--- PASS: TestAckOnlyAfterCommitAndRecovery (0.11s)
+PASS
+ok  	github.com/sathkruthi/factorymesh-industrial-observability/internal/pipeline	1.117s

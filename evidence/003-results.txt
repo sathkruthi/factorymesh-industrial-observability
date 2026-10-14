@@ -1,0 +1,12 @@
+DATABASE_URL=postgres://factorymesh:local_demo_only@localhost:55432/factorymesh?sslmode=disable python3 scripts/incident.py 003
+INCIDENT-003: unsafe policy failed for expected reason; corrected policy passed.
+=== RUN   TestIncident003AlertNoise
+    store_integration_test.go:180: noise handling: notifications=5 transitions=9
+--- FAIL: TestIncident003AlertNoise (0.57s)
+FAIL
+FAIL	github.com/sathkruthi/factorymesh-industrial-observability/internal/store	0.577s
+FAIL
+=== RUN   TestIncident003AlertNoise
+--- PASS: TestIncident003AlertNoise (0.06s)
+PASS
+ok  	github.com/sathkruthi/factorymesh-industrial-observability/internal/store	1.069s
