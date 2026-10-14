@@ -98,6 +98,12 @@ Read the [design](docs/design.md), [contracts](docs/contracts.md), [operations](
 
 These are explicitly synthetic engineering exercises, not claims about historical customer incidents or professional employment.
 
+## Running-system evidence
+
+![Actual Grafana dashboard during a synthetic telemetry run](evidence/dashboard.png)
+
+Captured from the running local stack after publishing 300 synthetic readings. Charts show actual Prometheus observations; no dashboard values were drawn or invented. Processing latency includes worker transaction time, and this short run does not establish sustained throughput.
+
 ## Ownership and licensing
 
 Original project code is unlicensed at the owner’s request. Third-party compiled dependency license texts are preserved in [third-party notices](docs/third-party-notices.md).
